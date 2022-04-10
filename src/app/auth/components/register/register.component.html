@@ -1,5 +1,36 @@
-<h1>
-  Auth module
-</h1>
-
-<router-outlet></router-outlet>
+<section class="col-md-6 offset-md-3 col-xs-12">
+  <h3 class="text-xs-center">
+    Sign Up
+  </h3>
+  <p class="text-xs-center">
+    <a
+      [routerLink]="['/login']"
+    >
+      Have an account?
+    </a>
+  </p>
+  Backend errors
+  <form [formGroup]="form">
+    <fieldset class="form-group">
+      <fieldset class="form-group">
+        <input class="form-control"
+               type="text"
+               placeholder="Username"
+               formControlName="username">
+      </fieldset>
+      <fieldset class="form-group">
+        <input class="form-control"
+               type="text"
+               placeholder="Email"
+               formControlName="username">
+      </fieldset>
+      <fieldset class="form-group">
+        <input class="form-control"
+               type="text"
+               placeholder="Password"
+               formControlName="username">
+      </fieldset>
+    </fieldset>
+    <button class="btn btn-lg btn-primary pull-xs-right">Sign up</button>
+  </form>
+</section>
