@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { registerAction } from 'app/auth/store/actions/register.action';
 
 @Component({
   selector: 'app-register',
@@ -9,7 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class RegisterComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -17,10 +19,13 @@ export class RegisterComponent implements OnInit {
 
   initializeForm() {
     this.form = this.fb.group({
-      username: '',
+      username: ['', Validators.required],
       email: '',
       password: '',
-      sdf: 'sdf',
     });
+  }
+
+  onSubmit() {
+    this.store.dispatch(registerAction(this.form.value));
   }
 }
