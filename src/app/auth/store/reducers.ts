@@ -4,6 +4,9 @@ import { registerAction, registerFailureAction, registerSuccessAction } from 'ap
 
 const initialState: AuthStateInterface = {
   isSubmitting: false,
+  currentUser: null,
+  isLoggedIn: null,
+  validationErrors: null,
 };
 
 export const authReducer = createReducer(
@@ -13,20 +16,24 @@ export const authReducer = createReducer(
     (state): AuthStateInterface => ({
       ...state,
       isSubmitting: true,
+      validationErrors: null,
     }),
   ),
   on(
     registerSuccessAction,
-    (state): AuthStateInterface => ({
+    (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
+      isLoggedIn: true,
+      currentUser: action.currentUser,
     }),
   ),
   on(
     registerFailureAction,
-    (state): AuthStateInterface => ({
+    (state, action): AuthStateInterface => ({
       ...state,
       isSubmitting: false,
+      validationErrors: action.errors,
     }),
   ),
 );

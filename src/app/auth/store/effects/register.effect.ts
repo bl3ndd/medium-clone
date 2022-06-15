@@ -4,6 +4,8 @@ import { registerAction, registerFailureAction, registerSuccessAction } from 'ap
 import { AuthService } from 'app/auth/services/auth.service';
 import { catchError, switchMap, of, map } from 'rxjs';
 import { CurrentUserInterface } from 'app/shared/types/currentUser.interface';
+import { BackendErrorsInterface } from 'app/shared/types/backendErrors.interface';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class RegisterEffect {
@@ -13,7 +15,9 @@ export class RegisterEffect {
       switchMap(({ request }) =>
         this.authService.register(request).pipe(
           map((currentUser: CurrentUserInterface) => registerSuccessAction({ currentUser })),
-          catchError(() => of(registerFailureAction())),
+          catchError((errorResponse: HttpErrorResponse) =>
+            of(registerFailureAction({ errors: errorResponse.error.errors })),
+          ),
         ),
       ),
     ),

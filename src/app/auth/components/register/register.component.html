@@ -9,7 +9,7 @@
       Have an account?
     </a>
   </p>
-  Backend errors
+  <app-backend-errors *ngIf="backendErrors$ | async" [backendErrors]="backendErrors$ | async"></app-backend-errors>
   <form [formGroup]="form"
         (ngSubmit)="onSubmit()"
   >
